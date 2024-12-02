@@ -18,9 +18,13 @@ public class ServiciosPlanta {
 	EjemplarRepository ejemplarrepo;
 	
 	public boolean validarPlanta(Planta p) {
-
-		return true;
-	}
+			if(plantarepo.existeCodigo(p)) {
+		return false;}
+			
+	return true;
+			
+			}
+			
 	
 	public void insertarPlanta(Planta p) {
 		plantarepo.saveAndFlush(p);
