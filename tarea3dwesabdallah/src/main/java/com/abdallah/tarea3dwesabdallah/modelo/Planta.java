@@ -69,6 +69,19 @@ public class Planta implements Serializable {
 	public void setNombrecientifico(String nombrecientifico) {
 		this.nombrecientifico = nombrecientifico;
 	}
+
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+
+	
 	
 	
 	

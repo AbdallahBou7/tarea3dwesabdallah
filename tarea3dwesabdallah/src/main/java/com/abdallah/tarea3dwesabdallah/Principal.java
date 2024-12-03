@@ -22,6 +22,9 @@ public class Principal implements CommandLineRunner {
 		System.out.println("INI");
 		
 		Planta p = new Planta();
+		
+		
+		
 		servplant.validarPlanta(p);
 		
 		servplant.insertarPlanta(p);
