@@ -30,6 +30,16 @@ public class ServiciosPlanta {
 		plantarepo.saveAndFlush(p);
 		
 	}
+
+
+	public Planta obtenerPorId(Long plantaId) {
+		return null;
+	}
+
+
+	public Object obtenerTodas() {
+		return null;
+	}
 	
 
 }

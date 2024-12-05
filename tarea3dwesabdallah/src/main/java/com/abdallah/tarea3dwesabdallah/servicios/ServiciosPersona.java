@@ -13,6 +13,10 @@ public class ServiciosPersona {
 	
 	  @Autowired
 	    private PersonaRepository personarep;
+	  
+	  public Persona autenticar(Long id, String nombre) {
+	        return personarep.findByIdAndNombre(id, nombre);
+	    }
 
 	    public void guardarPersona(Persona persona) {
 	        personarep.save(persona);

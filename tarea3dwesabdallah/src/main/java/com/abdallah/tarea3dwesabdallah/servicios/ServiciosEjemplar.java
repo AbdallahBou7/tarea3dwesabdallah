@@ -25,6 +25,10 @@ public class ServiciosEjemplar {
 	public void actualizar(Ejemplar e) {
 		ejemplarrepo.saveAndFlush(e);
 	}
+
+	public void insertarEjemplar(Ejemplar ejemplar) {
+		
+	}
 	
 
 }
