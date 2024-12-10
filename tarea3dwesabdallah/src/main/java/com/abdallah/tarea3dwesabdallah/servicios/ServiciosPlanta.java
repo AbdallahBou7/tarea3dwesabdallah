@@ -1,5 +1,7 @@
 package com.abdallah.tarea3dwesabdallah.servicios;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,9 +39,22 @@ public class ServiciosPlanta {
 	}
 
 
-	public Object obtenerTodas() {
+	public void vertodasPlantas() {
+		
+	}
+
+
+	public void modificarPlanta(Planta planta) {
+		
+	}
+
+
+	public List<Planta> listarPlantasOrdenadas() {
 		return null;
 	}
+
+
+	
 	
 
 }

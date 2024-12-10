@@ -1,139 +1,105 @@
 package com.abdallah.tarea3dwesabdallah;
 
+import com.abdallah.tarea3dwesabdallah.modelo.Persona;
+
+// import com.abdallah.tarea3dwesabdallah.vistas.ViveroFachadaPersonal;
+// import com.abdallah.tarea3dwesabdallah.modelo.Persona;
+
+import com.abdallah.tarea3dwesabdallah.servicios.ServiciosPersona;
+// import com.abdallah.tarea3dwesabdallah.vistas.ViveroConexion;
+import com.abdallah.tarea3dwesabdallah.vistas.ViveroFachadaAdmin;
+import com.abdallah.tarea3dwesabdallah.vistas.ViveroFachadaInvitado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import com.abdallah.tarea3dwesabdallah.modelo.*;
-import com.abdallah.tarea3dwesabdallah.servicios.*;
 
 import java.util.Scanner;
 
 @Component
 public class Principal implements CommandLineRunner {
 
-    @Autowired
-    private ServiciosPlanta servplant;
+	@Autowired
+    private ServiciosPersona servpersona;
+	
+	@Autowired
+    private ViveroFachadaAdmin FachadaAdmin;
+	
+	@Autowired
+    private ViveroFachadaInvitado fachadaInvitado;
 
-    @Autowired
-    private ServiciosEjemplar servejemplar;
+   // @Autowired
+   // private ViveroFachadaPersonal fachadaPersonal;
 
-    @Autowired
-    private ServiciosPersona servicioPersona;
-
-    @Autowired
-    private ServiciosMensaje servicioMensaje;
+    private final Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void run(String... args) throws Exception {
-        System.out.println("-------- INI ---------");
+    public void run(String... args) {
         boolean continuar = true;
 
-        Scanner scanner = new Scanner(System.in);
-
         while (continuar) {
-            mostrarMenu();
-            int opcion = obtenerOpcion(scanner);
+            System.out.println("\n--- Sistema del Vivero ---");
+            System.out.println("1. Iniciar como Administrador");
+            System.out.println("2. Iniciar como Personal");
+            System.out.println("3. Entrar como Invitado");
+            System.out.println("4. Salir");
+            System.out.print("Seleccione una opción: ");
+
+            int opcion = scanner.nextInt();
+            scanner.nextLine(); 
 
             switch (opcion) {
-                case 1 -> verPlantas();
-                case 2 -> registrarPersona(scanner);
-                case 3 -> registrarPlanta(scanner);
-                case 4 -> registrarEjemplar(scanner);
-                case 5 -> verMensajes();
-                case 6 -> continuar = false;
-                default -> System.out.println("Opción no válida. Intente nuevamente.");
+                case 1 -> iniciarSesionComoAdmin();
+                // case 2 -> iniciarSesionComoPersonal();
+                case 3 -> entrarComoInvitado();
+                case 4 -> {
+                    continuar = false;
+                    System.out.println("Saliendo del sistema...");
+                }
+                default -> System.out.println("Opción no válida.");
             }
         }
-
-        System.out.println("-------- FIN ---------");
-        scanner.close();
     }
 
-    private void mostrarMenu() {
-        System.out.println("\n--- Menú Principal ---");
-        System.out.println("1. Ver Plantas");
-        System.out.println("2. Registrar Persona");
-        System.out.println("3. Registrar Planta");
-        System.out.println("4. Registrar Ejemplar");
-        System.out.println("5. Ver Mensajes");
-        System.out.println("6. Salir");
-        System.out.print("Seleccione una opción: ");
-    }
+    private void iniciarSesionComoAdmin() {
+        System.out.println("\n--- Login de Administrador ---");
+        System.out.print("Ingrese su usuario: ");
+        String usuario = scanner.nextLine();
+        System.out.print("Ingrese su contraseña: ");
+        String contrasena = scanner.nextLine();
 
-    private int obtenerOpcion(Scanner scanner) {
-        int opcion;
-        try {
-            opcion = scanner.nextInt();
-        } catch (Exception e) {
-            scanner.nextLine(); 
-            opcion = -1; 
-        }
-        return opcion;
-    }
-
-    private void verPlantas() {
-        System.out.println("--- Lista de Plantas ---");
-       
-    }
-
-    private void registrarPersona(Scanner scanner) {
-        scanner.nextLine(); 
-        System.out.print("Ingrese el nombre: ");
-        String nombre = scanner.nextLine();
-        System.out.print("Ingrese el correo: ");
-        String email = scanner.nextLine();
-
-        Persona persona = new Persona();
-        persona.setNombre(nombre);
-        persona.setEmail(email);
-
-        servicioPersona.guardarPersona(persona);
-        System.out.println("Persona registrada exitosamente: " + persona);
-    }
-
-    private void registrarPlanta(Scanner scanner) {
-        scanner.nextLine(); 
-        System.out.print("Ingrese el nombre de la planta: ");
-        String nombre = scanner.nextLine();
-        System.out.print("Ingrese el nombre cientifico de planta: ");
-        String nombrecientifico = scanner.nextLine();
-
-        Planta planta = new Planta();
-		planta.setNombrecomun(nombre);
-        planta.setNombrecientifico(nombrecientifico);
-
-        if (servplant.validarPlanta(planta)) {
-            servplant.insertarPlanta(planta);
-            System.out.println("Planta registrada: " + planta);
+        Persona autenticado = servpersona.autenticarUsuario(usuario, contrasena);
+        if (autenticado != null) {
+            System.out.println("Bienvenido Administrador.");
+            FachadaAdmin.mostrarMenuPrincipal();
         } else {
-            System.out.println("La planta no pasó la validación.");
+            System.out.println("Credenciales incorrectas. Intente de nuevo.");
         }
     }
 
-    private void registrarEjemplar(Scanner scanner) {
-        scanner.nextLine(); 
-        System.out.print("Ingrese el código del ejemplar: ");
-        Long Id = scanner.nextLong();
-        System.out.print("Ingrese el ID de la planta: ");
-        Long plantaId = scanner.nextLong();
+   // private void iniciarSesionComoPersonal() {
+      //  System.out.println("\n--- Login de Personal ---");
+     //   System.out.print("Ingrese su usuario: ");
+     //   String usuario = scanner.nextLine();
+     //   System.out.print("Ingrese su contraseña: ");
+    //    String contrasena = scanner.nextLine();
 
-        Planta planta = servplant.obtenerPorId(plantaId);
-        if (planta == null) {
-            System.out.println("La planta con ID " + plantaId + " no existe.");
-            return;
-        }
-
-        Ejemplar ejemplar = new Ejemplar();
-        ejemplar.setId(Id);
-        ejemplar.setPlanta(planta);
-
-        servejemplar.insertarEjemplar(ejemplar);
-        System.out.println("Ejemplar registrado exitosamente: " + ejemplar);
+    //    boolean autenticado = fachadaPersonal.autenticar(usuario, contrasena);
+     //   if (autenticado) {
+       //     System.out.println("Acceso concedido como Personal.");
+           // fachadaPersonal.mostrarMenuInvitado();
+      //  } else {
+     //       System.out.println("Credenciales incorrectas. Intente de nuevo.");
+     //   }
+  //  }
+    
+    
+// }
+    
+    private void entrarComoInvitado() {
+        System.out.println("\n--- Acceso como Invitado ---");
+        fachadaInvitado.MostrarMenuInvitado();
     }
-
-    private void verMensajes() {
-        System.out.println("--- Lista de Mensajes ---");
-    }
+    
+    
 }
 

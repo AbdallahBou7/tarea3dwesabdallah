@@ -80,6 +80,8 @@ public class Persona implements Serializable {
 	public void setMensajes(List<Mensaje> mensajes) {
 		this.mensajes = mensajes;
 	}
+
+
 	 
 	 
 	 

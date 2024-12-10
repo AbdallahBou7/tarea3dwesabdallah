@@ -1,6 +1,7 @@
 package com.abdallah.tarea3dwesabdallah.servicios;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,29 @@ public class ServiciosPersona {
 	    public List<Persona> obtenerTodas() {
 	        return personarep.findAll();
 	    }
+
+		public Optional<Persona> buscarPorId(Long valueOf) {
+			return null;
+		}
+
+		public boolean validarPersona(String email, String nombre) {
+			return false;
+		}
+
+		public Persona autenticarUsuario(String usuario, String contrasena) {
+			return null;
+		}
+
+		public void registrarUsuario(String nombre, String correo, String usuario, String contrasena) {
+			
+		}
+
+		
+
+	
+
+		
+
+		
 
 }
